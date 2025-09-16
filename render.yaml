@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: mon-app-flask-sur-render   # Nom visible sur Render
+    env: python                      # Langage utilisé
+    plan: free                       # Plan gratuit
+    region: frankfurt                # (Optionnel) Data center proche (ex: frankfurt, oregon, etc.)
+    buildCommand: "pip install -r requirements.txt"  # Installation des dépendances
+    startCommand: "gunicorn app:app"                 # Démarrage de l'app (fichier:instance)
+    autoDeploy: true                 # Déploie automatiquement à chaque push sur GitHub
+    branch: main                     # Branche à surveiller (ou "master" selon ton repo)
