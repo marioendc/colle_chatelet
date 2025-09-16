@@ -19,6 +19,7 @@ def calendrier():
     amail = request.form["amail"]
     semaine = int(request.form["semaine"])
     #recuperer les horaires dans le xlsx :
+
     #trouver le groupe
     sheet = wb["Créneaux&Salles&listesGroupes"]
     groupe = None
@@ -31,7 +32,6 @@ def calendrier():
     
     #trouver le code colle (ex : A5, P3...)
     sheet = wb["Colloscope pour les étudiants"]
-    #code_colle = sheet.cell(row=semaine+3, column=groupe+1).value
     code_colle = None
     for row in sheet.iter_rows(values_only=True):
         if semaine==row[1]:
@@ -41,6 +41,8 @@ def calendrier():
     #trouver le code horaire (ex : code_horaire1="A5")
     code_horaire1 = code_colle.split(",")[0].strip()
     code_horaire2 = code_colle.split(",")[1].strip()
+    groupe_si = code_colle.split(",")[2].strip()
+    groupe_td = code_colle.split(",")[3].strip()
 
     #trouver les informations des horaires (ex : info_horaire1=....)
     sheet = wb["Créneaux&Salles&listesGroupes"]
@@ -59,7 +61,7 @@ def calendrier():
     if groupe==None:
         return render_template("introuvable.html")
     else:
-        return render_template("calendrier.html", groupe=groupe, prenom=prenom, nom=nom, horaire1=i_horaire1, horaire2=i_horaire2)
+        return render_template("calendrier.html", groupe=groupe, prenom=prenom, nom=nom, horaire1=i_horaire1, horaire2=i_horaire2, groupe_td=groupe_td, groupe_si=groupe_si)
 
 
 
